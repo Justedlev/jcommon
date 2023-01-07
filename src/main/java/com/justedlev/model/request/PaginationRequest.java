@@ -1,4 +1,4 @@
-package com.justedlev.jmodel.request;
+package com.justedlev.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

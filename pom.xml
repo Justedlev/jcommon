@@ -61,7 +61,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <packageName>com.justedlev.taskexec</packageName>
+                            <packageName>com.justedlev.model</packageName>
                         </manifest>
                         <manifestEntries>
                             <Created-By>Justedlev {-...-}</Created-By>
