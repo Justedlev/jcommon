@@ -1,4 +1,4 @@
-package com.justedlev.jmodel.response;
+package com.justedlev.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
-public class ValidationErrorResponse {
+public class ReportResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Builder.Default
     private Date timestamp = new Date();
+    private String message;
     private String details;
-    @Builder.Default
-    private List<ViolationResponse> violations = new ArrayList<>();
 }

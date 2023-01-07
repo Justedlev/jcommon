@@ -1,4 +1,4 @@
-package com.justedlev.jmodel.response;
+package com.justedlev.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
-public class ReportResponse {
+public class ErrorDetailsResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Builder.Default
     private Date timestamp = new Date();
