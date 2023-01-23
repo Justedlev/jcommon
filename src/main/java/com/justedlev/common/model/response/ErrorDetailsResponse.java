@@ -1,4 +1,4 @@
-package com.justedlev.model.response;
+package com.justedlev.common.model.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

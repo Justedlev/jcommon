@@ -1,4 +1,4 @@
-package com.justedlev.model.response;
+package com.justedlev.common.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
