@@ -54,11 +54,6 @@
             <version>2.7.6</version>
         </dependency>
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>3.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>5.6.14.Final</version>
@@ -69,7 +64,7 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Justedlev/rest-models</url>
+            <url>https://maven.pkg.github.com/Justedlev/jcommon</url>
         </repository>
     </distributionManagement>
 
