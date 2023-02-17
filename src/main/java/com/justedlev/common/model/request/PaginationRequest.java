@@ -1,6 +1,7 @@
 package com.justedlev.common.model.request;
 
 import lombok.*;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -25,9 +27,23 @@ public class PaginationRequest {
 
     public PageRequest toPageRequest() {
         return Optional.ofNullable(getSorting())
-                .map(Sorting::toSort)
+                .filter(Sorting::isSortable)
+                .map(this::toSort)
                 .map(sort -> PageRequest.of(getPage(), getSize(), sort))
                 .orElse(PageRequest.of(getPage(), getSize()));
+    }
+
+    private Sort toSort(Sorting sorting) {
+        return Optional.ofNullable(sorting)
+                .filter(Sorting::isSortable)
+                .map(v -> {
+                    if (v.getType().equals(Sorting.Type.ASC))
+                        return Sort.by(Sort.Direction.ASC, v.getArrayParameters());
+                    else if (v.getType().equals(Sorting.Type.DESC))
+                        return Sort.by(Sort.Direction.DESC, v.getArrayParameters());
+                    else return null;
+                })
+                .orElse(null);
     }
 
     @Builder
@@ -35,22 +51,17 @@ public class PaginationRequest {
     @NoArgsConstructor
     @Data
     public static class Sorting {
-        private String parameter;
+        private Set<String> parameters;
         private Type type;
 
-        public Sort toSort() {
-            return Optional.ofNullable(getType())
-                    .filter(v -> isSortable())
-                    .map(v -> {
-                        if (v.equals(Type.ASC)) return Sort.by(Sort.Direction.ASC, getParameter());
-                        else if (v.equals(Type.DESC)) return Sort.by(Sort.Direction.DESC, getParameter());
-                        else return null;
-                    })
-                    .orElse(null);
+        public boolean isSortable() {
+            return CollectionUtils.isNotEmpty(getParameters()) && ObjectUtils.isNotEmpty(getType());
         }
 
-        public boolean isSortable() {
-            return StringUtils.isNotBlank(getParameter()) && ObjectUtils.isNotEmpty(getType());
+        public String[] getArrayParameters() {
+            return getParameters().stream()
+                    .filter(StringUtils::isNotBlank)
+                    .toArray(String[]::new);
         }
 
         public enum Type {
