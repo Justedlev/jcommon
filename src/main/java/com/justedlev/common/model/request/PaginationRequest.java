@@ -1,9 +1,6 @@
 package com.justedlev.common.model.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,4 +16,11 @@ public class PaginationRequest {
     @Min(value = 1, message = "Page size cannot be less then 1.")
     @NotNull(message = "Page size cannot be null.")
     private Integer size;
+    private String sortBy;
+    @Builder.Default
+    private SortType sortType = SortType.NONE;
+
+    public enum SortType {
+        NONE, DESC, ASC
+    }
 }
