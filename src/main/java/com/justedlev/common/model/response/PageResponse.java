@@ -5,12 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class PageResponse<D> {
-    private Integer page;
-    private Integer maxPages;
-    private D data;
+    @Builder.Default
+    private Integer pageNo = 1;
+    @Builder.Default
+    private Integer totalPages = 1;
+    @Builder.Default
+    private Boolean hasNext = Boolean.FALSE;
+    @Builder.Default
+    private Boolean hasPrevious = Boolean.FALSE;
+    @Builder.Default
+    private Collection<D> content = Collections.emptyList();
 }

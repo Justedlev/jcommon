@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 public class PaginationRequest {
-    @Min(value = 1, message = "Page number cannot be less then 1.")
+    @Min(value = 0, message = "Page number cannot be less then 1.")
     @NotNull(message = "Page number cannot be null.")
     private Integer page;
     @Min(value = 1, message = "Page size cannot be less then 1.")
