@@ -19,17 +19,19 @@ import java.util.Set;
 public class PaginationRequest {
     @Min(value = 1, message = "Page number cannot be less then 1.")
     @NotNull(message = "Page number cannot be null.")
-    private Integer page;
+    @Builder.Default
+    private Integer page = 1;
     @Min(value = 1, message = "Page size cannot be less then 1.")
     @NotNull(message = "Page size cannot be null.")
-    private Integer size;
+    @Builder.Default
+    private Integer size = 1;
     private Sorting sorting;
 
     public PageRequest toPageRequest() {
         return Optional.ofNullable(getSorting())
                 .filter(Sorting::isSortable)
                 .map(this::toSort)
-                .map(sort -> PageRequest.of(getPage(), getSize(), sort))
+                .map(sort -> PageRequest.of(getPage() - 1, getSize(), sort))
                 .orElse(PageRequest.of(getPage(), getSize()));
     }
 
