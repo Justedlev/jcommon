@@ -40,14 +40,17 @@ public class PaginationRequest {
 
         public Sort toSort() {
             return Optional.ofNullable(getType())
-                    .filter(ObjectUtils::isNotEmpty)
-                    .filter(v -> StringUtils.isNotBlank(getParameter()))
+                    .filter(v -> isSortable())
                     .map(v -> {
                         if (v.equals(Type.ASC)) return Sort.by(Sort.Direction.ASC, getParameter());
                         else if (v.equals(Type.DESC)) return Sort.by(Sort.Direction.DESC, getParameter());
                         else return null;
                     })
                     .orElse(null);
+        }
+
+        public boolean isSortable() {
+            return StringUtils.isNotBlank(getParameter()) && ObjectUtils.isNotEmpty(getType());
         }
 
         public enum Type {
