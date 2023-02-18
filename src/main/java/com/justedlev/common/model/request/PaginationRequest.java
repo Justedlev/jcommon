@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import javax.validation.constraints.Min;
@@ -27,7 +28,7 @@ public class PaginationRequest {
     private Integer size = 1;
     private Sorting sorting;
 
-    public PageRequest toPageRequest() {
+    public Pegeable toPegeable() {
         return Optional.ofNullable(getSorting())
                 .map(Sorting::toSort)
                 .map(sort -> PageRequest.of(getPage() - 1, getSize(), sort))
