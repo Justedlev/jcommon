@@ -1,9 +1,6 @@
 package com.justedlev.common.model.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;
@@ -24,15 +21,6 @@ public class PageResponse<C> {
     private Boolean hasPrevious = Boolean.FALSE;
     @Builder.Default
     private Collection<C> content = Collections.emptyList();
-
-    public static <T, C> PageResponse<C> from(Page<T> page) {
-        return PageResponse.<C>builder()
-                .pageNo(page.getNumber() + 1)
-                .totalPages(page.getTotalPages())
-                .hasNext(page.hasNext())
-                .hasPrevious(page.hasPrevious())
-                .build();
-    }
 
     public static <T, C> PageResponse<C> fromWithContent(Page<T> page, Collection<C> content) {
         return PageResponse.<C>builder()
