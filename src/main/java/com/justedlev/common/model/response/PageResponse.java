@@ -17,6 +17,8 @@ public class PageResponse<C> {
     @Builder.Default
     private Integer totalPages = 1;
     @Builder.Default
+    private Integer size = 0;
+    @Builder.Default
     private Boolean hasNext = Boolean.FALSE;
     @Builder.Default
     private Boolean hasPrevious = Boolean.FALSE;
@@ -27,6 +29,7 @@ public class PageResponse<C> {
         return PageResponse.<T>builder()
                 .pageNo(page.getNumber() + 1)
                 .totalPages(page.getTotalPages())
+                .size(page.getSize())
                 .hasNext(page.hasNext())
                 .hasPrevious(page.hasPrevious())
                 .content(page.getContent())
