@@ -13,7 +13,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Data
 @Builder
-public class PageResponse<D> {
+public class PageResponse<C> {
     @Builder.Default
     private Integer pageNo = 1;
     @Builder.Default
@@ -23,13 +23,24 @@ public class PageResponse<D> {
     @Builder.Default
     private Boolean hasPrevious = Boolean.FALSE;
     @Builder.Default
-    private Collection<D> content = Collections.emptyList();
+    private Collection<C> content = Collections.emptyList();
 
-    public static <T> PageResponse.PageResponseBuilder<T> from(Page<T> page) {
-        return PageResponse.<T>builder()
+    public static <T, C> PageResponse<C> from(Page<T> page) {
+        return PageResponse.<C>builder()
                 .pageNo(page.getNumber() + 1)
                 .totalPages(page.getTotalPages())
                 .hasNext(page.hasNext())
-                .hasPrevious(page.hasPrevious());
+                .hasPrevious(page.hasPrevious())
+                .build();
+    }
+
+    public static <T, C> PageResponse<C> fromWithContent(Page<T> page, Collection<C> content) {
+        return PageResponse.<C>builder()
+                .pageNo(page.getNumber() + 1)
+                .totalPages(page.getTotalPages())
+                .hasNext(page.hasNext())
+                .hasPrevious(page.hasPrevious())
+                .content(content)
+                .build();
     }
 }
