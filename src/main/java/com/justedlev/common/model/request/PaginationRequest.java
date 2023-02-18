@@ -40,17 +40,17 @@ public class PaginationRequest {
     @Data
     public static class Sorting {
         private Set<String> parameters;
-        private Type type;
+        private Direction direction;
 
         public boolean isSortable() {
-            return CollectionUtils.isNotEmpty(getParameters()) && ObjectUtils.isNotEmpty(getType());
+            return CollectionUtils.isNotEmpty(getParameters()) && ObjectUtils.isNotEmpty(getDirection());
         }
 
         public Sort toSort() {
             if (!isSortable()) return Sort.unsorted();
-            else if (getType().equals(Sorting.Type.ASC))
+            else if (getDirection().equals(Direction.ASC))
                 return Sort.by(Sort.Direction.ASC, parametersAsArray());
-            else if (getType().equals(Sorting.Type.DESC))
+            else if (getDirection().equals(Direction.DESC))
                 return Sort.by(Sort.Direction.DESC, parametersAsArray());
             else return Sort.unsorted();
         }
@@ -61,7 +61,7 @@ public class PaginationRequest {
                     .toArray(String[]::new);
         }
 
-        public enum Type {
+        public enum Direction {
             DESC, ASC
         }
     }
