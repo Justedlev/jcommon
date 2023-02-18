@@ -29,23 +29,9 @@ public class PaginationRequest {
 
     public PageRequest toPageRequest() {
         return Optional.ofNullable(getSorting())
-                .filter(Sorting::isSortable)
-                .map(this::toSort)
+                .map(Sorting::toSort)
                 .map(sort -> PageRequest.of(getPage() - 1, getSize(), sort))
                 .orElse(PageRequest.of(getPage(), getSize()));
-    }
-
-    private Sort toSort(Sorting sorting) {
-        return Optional.ofNullable(sorting)
-                .filter(Sorting::isSortable)
-                .map(v -> {
-                    if (v.getType().equals(Sorting.Type.ASC))
-                        return Sort.by(Sort.Direction.ASC, v.getArrayParameters());
-                    else if (v.getType().equals(Sorting.Type.DESC))
-                        return Sort.by(Sort.Direction.DESC, v.getArrayParameters());
-                    else return null;
-                })
-                .orElse(null);
     }
 
     @Builder
@@ -60,7 +46,16 @@ public class PaginationRequest {
             return CollectionUtils.isNotEmpty(getParameters()) && ObjectUtils.isNotEmpty(getType());
         }
 
-        public String[] getArrayParameters() {
+        public Sort toSort() {
+            if (!isSortable()) return Sort.unsorted();
+            else if (getType().equals(Sorting.Type.ASC))
+                return Sort.by(Sort.Direction.ASC, parametersAsArray());
+            else if (getType().equals(Sorting.Type.DESC))
+                return Sort.by(Sort.Direction.DESC, parametersAsArray());
+            else return Sort.unsorted();
+        }
+
+        private String[] parametersAsArray() {
             return getParameters().stream()
                     .filter(StringUtils::isNotBlank)
                     .toArray(String[]::new);
