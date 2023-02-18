@@ -6,14 +6,13 @@
 
     <groupId>com.justedlev</groupId>
     <artifactId>jcommon</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <github.global.server>github</github.global.server>
-        <github.maven-plugin>0.12</github.maven-plugin>
     </properties>
 
     <dependencies>
@@ -54,17 +53,27 @@
             <version>2.7.6</version>
         </dependency>
         <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>3.1.1</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>5.6.14.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
         </dependency>
     </dependencies>
 
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Justedlev/rest-models</url>
+            <name>GitHub Justedlev Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Justedlev/jcommon</url>
         </repository>
     </distributionManagement>
 
@@ -90,8 +99,8 @@
                         </manifest>
                         <manifestEntries>
                             <Created-By>Justedlev {-...-}</Created-By>
-                            <Implementation-Title>${description}</Implementation-Title>
-                            <Implementation-Version>${version}</Implementation-Version>
+                            <Implementation-Title>${project.description}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>
