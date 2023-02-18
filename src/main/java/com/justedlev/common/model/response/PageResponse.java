@@ -25,13 +25,11 @@ public class PageResponse<D> {
     @Builder.Default
     private Collection<D> content = Collections.emptyList();
 
-    public static <T, D> PageResponse<D> fromWithContent(Page<T> page, Collection<D> content) {
-        return PageResponse.<D>builder()
+    public static <T> PageResponse.PageResponseBuilder<T> from(Page<T> page) {
+        return PageResponse.<T>builder()
                 .pageNo(page.getNumber() + 1)
                 .totalPages(page.getTotalPages())
                 .hasNext(page.hasNext())
-                .hasPrevious(page.hasPrevious())
-                .content(content)
-                .build();
+                .hasPrevious(page.hasPrevious());
     }
 }
