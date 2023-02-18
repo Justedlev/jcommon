@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -23,4 +24,14 @@ public class PageResponse<D> {
     private Boolean hasPrevious = Boolean.FALSE;
     @Builder.Default
     private Collection<D> content = Collections.emptyList();
+
+    public static <T, D> PageResponse<D> fromWithContent(Page<T> page, Collection<D> content) {
+        return PageResponse.<D>builder()
+                .pageNo(page.getNumber() + 1)
+                .totalPages(page.getTotalPages())
+                .hasNext(page.hasNext())
+                .hasPrevious(page.hasPrevious())
+                .content(content)
+                .build();
+    }
 }
