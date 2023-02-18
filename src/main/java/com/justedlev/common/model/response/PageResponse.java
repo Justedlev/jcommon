@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,13 +23,15 @@ public class PageResponse<C> {
     @Builder.Default
     private Collection<C> content = Collections.emptyList();
 
-    public static <T, C> PageResponse<C> fromWithContent(Page<T> page, Collection<C> content) {
+    public static <T, C> PageResponse<C> from(Page<T> page, Function<T, C> converter) {
+        var converted = page.map(converter);
+
         return PageResponse.<C>builder()
-                .pageNo(page.getNumber() + 1)
-                .totalPages(page.getTotalPages())
-                .hasNext(page.hasNext())
-                .hasPrevious(page.hasPrevious())
-                .content(content)
+                .pageNo(converted.getNumber() + 1)
+                .totalPages(converted.getTotalPages())
+                .hasNext(converted.hasNext())
+                .hasPrevious(converted.hasPrevious())
+                .content(converted.getContent())
                 .build();
     }
 }
