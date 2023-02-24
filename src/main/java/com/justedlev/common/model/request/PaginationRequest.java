@@ -28,7 +28,7 @@ public class PaginationRequest {
     private Integer size = 1;
     private Sorting sorting;
 
-    public Pegeable toPegeable() {
+    public Pageable toPegeable() {
         return Optional.ofNullable(getSorting())
                 .map(Sorting::toSort)
                 .map(sort -> PageRequest.of(getPage() - 1, getSize(), sort))
