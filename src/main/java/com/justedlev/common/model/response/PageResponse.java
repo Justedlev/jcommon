@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 @AllArgsConstructor
@@ -17,13 +18,15 @@ public class PageResponse<C> {
     @Builder.Default
     private Integer totalPages = 1;
     @Builder.Default
+    private Long totalElements = 0L;
+    @Builder.Default
     private Integer size = 0;
     @Builder.Default
     private Boolean hasNext = Boolean.FALSE;
     @Builder.Default
     private Boolean hasPrevious = Boolean.FALSE;
     @Builder.Default
-    private Collection<C> content = Collections.emptyList();
+    private List<C> content = Collections.emptyList();
 
     public static <T> PageResponse<T> from(Page<T> page) {
         return PageResponse.<T>builder()
@@ -33,6 +36,7 @@ public class PageResponse<C> {
                 .hasNext(page.hasNext())
                 .hasPrevious(page.hasPrevious())
                 .content(page.getContent())
+                .totalElements(page.getTotalElements())
                 .build();
     }
 }
