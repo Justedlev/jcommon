@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,8 +30,12 @@ public class PageResponse<C> {
     @Builder.Default
     private List<C> content = Collections.emptyList();
 
-    public static <T> PageResponse<T> from(Page<T> page) {
-        return PageResponse.<T>builder()
+    public static <I, O> PageResponse<O> from(Page<I> page, Function<I, O> converter) {
+        return from(page.map(converter));
+    }
+
+    public static <I> PageResponse<I> from(Page<I> page) {
+        return PageResponse.<I>builder()
                 .pageNo(page.getNumber() + 1)
                 .totalPages(page.getTotalPages())
                 .size(page.getSize())
